@@ -10,44 +10,80 @@
         tailwind.config = {
             theme: {
                 extend: {
+                    // Custom colors for a neon/gaming theme
                     colors: {
                         'neon-blue': '#00f5ff',
                         'neon-purple': '#8b5cf6',
                         'dark-bg': '#0a0a0f',
                         'card-bg': '#1a1a2e',
-                        'primary': '#5D5CDE'
+                        'primary': '#5D5CDE',
+                        'wr-color': '#A0522D', // Custom color for War Robots (Sienna)
+                        'ts-color': '#00BFFF', // Custom color for Tank Stars (Deep Sky Blue)
+                        'hos-color': '#32CD32', // Custom color for Hills of Steel (Lime Green)
+                        'au-color': '#DC143C'  // Custom color for Among Us (Crimson)
                     },
+                    // Custom animations for various effects
                     animation: {
-                        'glow': 'glow 2s ease-in-out infinite alternate',
-                        'float': 'float 3s ease-in-out infinite',
-                        'slide-up': 'slide-up 0.6s ease-out',
-                        'fade-in': 'fade-in 0.8s ease-out'
+                        'glow': 'glow 2s ease-in-out infinite alternate', // Continuous glow effect
+                        'float': 'float 3s ease-in-out infinite', // Gentle floating effect
+                        'slide-up': 'slide-up 0.6s ease-out forwards', // Slide up and stay at final state
+                        'fade-in': 'fade-in 0.8s ease-out forwards', // Fade in and stay at final state
+                        'pulse-once': 'pulse 0.5s ease-out', // Single pulse for click/hover feedback
+                        'shimmer': 'shimmer 1.5s infinite linear', // Horizontal shimmer for text/gradients
+                        'bounce-in': 'bounce-in 0.8s ease-out', // Bouncy entrance for prominent elements
+                        'scale-in': 'scale-in 0.5s ease-out forwards', // Scale in for cards/elements on load
+                        'fill-circle': 'fill-circle 1.5s ease-out forwards', // Animation for circular progress bar
+                        'count-up': 'count-up 1.5s ease-out forwards' // Animation for percentage text
+                    },
+                    // Keyframes defined directly in Tailwind config for better integration
+                    keyframes: {
+                        glow: {
+                            'from': { 'box-shadow': '0 0 20px #5D5CDE' },
+                            'to': { 'box-shadow': '0 0 30px #5D5CDE, 0 0 40px #5D5CDE' },
+                        },
+                        float: {
+                            '0%, 100%': { 'transform': 'translateY(0px)' },
+                            '50%': { 'transform': 'translateY(-10px)' },
+                        },
+                        'slide-up': {
+                            'from': { 'opacity': '0', 'transform': 'translateY(30px)' },
+                            'to': { 'opacity': '1', 'transform': 'translateY(0)' },
+                        },
+                        'fade-in': {
+                            'from': { 'opacity': '0' },
+                            'to': { 'opacity': '1' },
+                        },
+                        pulse: {
+                            '0%': { 'transform': 'scale(1)' },
+                            '50%': { 'transform': 'scale(1.05)' },
+                            '100%': { 'transform': 'scale(1)' },
+                        },
+                        shimmer: {
+                            '0%': { 'background-position': '-1000px 0' },
+                            '100%': { 'background-position': '1000px 0' }
+                        },
+                        'bounce-in': {
+                            '0%': { 'opacity': '0', 'transform': 'scale(0.8)' },
+                            '60%': { 'opacity': '1', 'transform': 'scale(1.05)' },
+                            '100%': { 'transform': 'scale(1)' }
+                        },
+                        'scale-in': {
+                            'from': { 'opacity': '0', 'transform': 'scale(0.9)' },
+                            'to': { 'opacity': '1', 'transform': 'scale(1)' },
+                        },
+                        'fill-circle': {
+                            'to': { 'stroke-dashoffset': '0' } /* Actual value set by JS */
+                        },
+                        'count-up': {
+                            'to': { 'opacity': '1' } /* Actual counting handled by JS */
+                        }
                     }
                 }
             }
         }
     </script>
     <style>
-        @keyframes glow {
-            from { box-shadow: 0 0 20px #5D5CDE; }
-            to { box-shadow: 0 0 30px #5D5CDE, 0 0 40px #5D5CDE; }
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-        
-        @keyframes slide-up {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        @keyframes fade-in {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
+        /* Custom gradient text for titles and branding */
         .gradient-text {
             background: linear-gradient(45deg, #5D5CDE, #00f5ff);
             -webkit-background-clip: text;
@@ -55,154 +91,175 @@
             background-clip: text;
         }
         
-        .glass-effect {
-            background: rgba(26, 26, 46, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(93, 92, 222, 0.3);
-        }
-        
-        .hover-glow:hover {
-            box-shadow: 0 0 20px rgba(93, 92, 222, 0.5);
-            transform: translateY(-2px);
-            transition: all 0.3s ease;
+        /* Shimmering gradient text for a dynamic effect */
+        .gradient-text-shimmer {
+            background: linear-gradient(90deg, #5D5CDE, #00f5ff, #5D5CDE); /* Adjusted gradient for shimmer */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% 100%; /* Wider background for shimmer movement */
+            animation: shimmer 3s infinite linear; /* Apply shimmer animation */
         }
 
-        /* Dark mode styles */
+        /* Enhanced glass effect for cards and sections */
+        .glass-effect {
+            background: rgba(26, 26, 46, 0.6); /* Slightly more transparent */
+            backdrop-filter: blur(20px); /* Increased blur for stronger effect */
+            border: 1px solid rgba(93, 92, 222, 0.5); /* Stronger border for definition */
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4); /* Deeper shadow */
+            -webkit-backdrop-filter: blur(20px); /* Webkit prefix for Safari */
+        }
+        
+        /* Hover glow effect with subtle scale for interactive elements */
+        .hover-glow:hover {
+            box-shadow: 0 0 30px rgba(93, 92, 222, 0.7); /* More intense glow on hover */
+            transform: translateY(-3px) scale(1.02); /* Lift and slightly scale */
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Smoother transition curve */
+        }
+
+        /* Initial hidden state for elements that will animate into view */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        /* Specific delay classes for staggered animations */
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; }
+        .delay-500 { animation-delay: 0.5s; }
+        .delay-600 { animation-delay: 0.6s; }
+
+        /* Styles for the circular progress bars */
+        .progress-circle {
+            transform: rotate(-90deg); /* Start the circle from the top */
+        }
+        .progress-circle-bg {
+            stroke: rgba(93, 92, 222, 0.2); /* Lighter background for the track */
+            stroke-width: 8;
+            fill: none;
+        }
+        .progress-circle-fill {
+            stroke-width: 8;
+            fill: none;
+            stroke-linecap: round; /* Rounded ends for the progress bar */
+            transition: stroke-dashoffset 1.5s ease-out; /* Smooth animation for filling */
+        }
+        .percentage-text {
+            font-weight: bold;
+            font-size: 1.5rem; /* Large percentage text */
+            opacity: 0; /* Hidden until animated */
+            transition: opacity 0.5s ease-in;
+        }
+
+        /* Dark mode styles (already present, ensuring compatibility) */
         .dark {
             background-color: #181818;
         }
-        
         .dark .bg-white {
             background-color: #181818;
         }
-        
         .dark .text-gray-900 {
             color: #ffffff;
         }
-        
         .dark .text-gray-600 {
             color: #a0a0a0;
         }
-        
         .dark .bg-gray-100 {
             background-color: #2a2a2a;
         }
     </style>
 </head>
-<body class="bg-dark-bg text-white min-h-screen">
+<body class="bg-dark-bg text-white min-h-screen font-sans">
     <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 glass-effect">
+    <nav class="fixed top-0 w-full z-50 glass-effect py-2 backdrop-blur-md">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex items-center">
-                    <h1 class="text-2xl font-bold gradient-text">🎮 Lampros Games</h1>
+                    <!-- Logo with subtle glow and shimmer -->
+                    <h1 class="text-2xl font-bold gradient-text-shimmer animate-fade-in">🎮 Lampros Games</h1>
                 </div>
+                <!-- Desktop Navigation Links -->
                 <div class="hidden md:block">
                     <div class="flex items-center space-x-8">
-                        <a href="#home" class="hover:text-primary transition-colors">Home</a>
-                        <a href="#content" class="hover:text-primary transition-colors">Content</a>
-                        <a href="#about" class="hover:text-primary transition-colors">About</a>
-                        <a href="#social" class="hover:text-primary transition-colors">Social</a>
+                        <a href="#home" class="text-lg hover:text-neon-blue transition-all duration-300 transform hover:scale-105">Home</a>
+                        <a href="#games-i-play" class="text-lg hover:text-neon-blue transition-all duration-300 transform hover:scale-105">Games I Play</a>
+                        <a href="#about" class="text-lg hover:text-neon-blue transition-all duration-300 transform hover:scale-105">About</a>
+                        <a href="#social" class="text-lg hover:text-neon-blue transition-all duration-300 transform hover:scale-105">Social</a>
                     </div>
                 </div>
+                <!-- Mobile Menu Button -->
                 <div class="md:hidden">
-                    <button id="mobile-menu-btn" class="text-white hover:text-primary">
+                    <button id="mobile-menu-btn" class="text-white hover:text-primary transition-colors focus:outline-none">
                         <i class="fas fa-bars text-xl"></i>
                     </button>
                 </div>
             </div>
         </div>
         
-        <!-- Mobile menu -->
-        <div id="mobile-menu" class="hidden md:hidden glass-effect">
+        <!-- Mobile menu content, hidden by default -->
+        <div id="mobile-menu" class="hidden md:hidden glass-effect mt-2 rounded-lg mx-4">
             <div class="px-2 pt-2 pb-3 space-y-1">
-                <a href="#home" class="block px-3 py-2 hover:text-primary transition-colors">Home</a>
-                <a href="#content" class="block px-3 py-2 hover:text-primary transition-colors">Content</a>
-                <a href="#about" class="block px-3 py-2 hover:text-primary transition-colors">About</a>
-                <a href="#social" class="block px-3 py-2 hover:text-primary transition-colors">Social</a>
+                <a href="#home" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-card-bg hover:text-primary transition-colors">Home</a>
+                <a href="#games-i-play" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-card-bg hover:text-primary transition-colors">Games I Play</a>
+                <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-card-bg hover:text-primary transition-colors">About</a>
+                <a href="#social" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-card-bg hover:text-primary transition-colors">Social</a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden">
-        <!-- Animated background elements -->
-        <div class="absolute inset-0 overflow-hidden">
-            <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-primary rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float"></div>
-            <div class="absolute top-3/4 right-1/4 w-72 h-72 bg-neon-blue rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float" style="animation-delay: 1s;"></div>
-            <div class="absolute bottom-1/4 left-1/2 w-80 h-80 bg-neon-purple rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-float" style="animation-delay: 2s;"></div>
+    <section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden py-20">
+        <!-- Animated background elements, slightly adjusted for better visual flow -->
+        <div class="absolute inset-0 overflow-hidden z-0">
+            <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-primary rounded-full mix-blend-screen filter blur-3xl opacity-25 animate-float" style="animation-duration: 4s;"></div>
+            <div class="absolute top-3/4 right-1/4 w-72 h-72 bg-neon-blue rounded-full mix-blend-screen filter blur-3xl opacity-25 animate-float" style="animation-delay: 1.5s; animation-duration: 5s;"></div>
+            <div class="absolute bottom-1/4 left-1/2 w-80 h-80 bg-neon-purple rounded-full mix-blend-screen filter blur-3xl opacity-25 animate-float" style="animation-delay: 3s; animation-duration: 6s;"></div>
         </div>
         
-        <div class="relative z-10 text-center px-4 animate-slide-up">
-            <h1 class="text-6xl md:text-8xl font-bold mb-6">
-                <span class="gradient-text">LAMPROS</span>
+        <div class="relative z-10 text-center px-4 animate-bounce-in">
+            <!-- Main title with shimmer -->
+            <h1 class="text-6xl md:text-8xl font-extrabold mb-6">
+                <span class="gradient-text-shimmer">LAMPROS</span>
                 <br>
                 <span class="text-white">GAMES</span>
             </h1>
-            <p class="text-xl md:text-2xl mb-8 text-gray-300 max-w-2xl mx-auto">
+            <!-- Subtitle with slight animation -->
+            <p class="text-xl md:text-2xl mb-8 text-gray-300 max-w-2xl mx-auto animate-fade-in delay-200">
                 Epic gaming content, reviews, and gameplay that'll blow your mind! 🚀
             </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <div class="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in delay-400">
+                <!-- YouTube Button with enhanced hover and click effects -->
                 <a href="https://www.youtube.com/@LamprosGamesofficial" target="_blank" 
-                   class="bg-red-600 hover:bg-red-700 px-8 py-4 rounded-full text-lg font-semibold hover-glow transition-all duration-300">
+                   class="bg-red-600 hover:bg-red-700 active:scale-95 px-8 py-4 rounded-full text-lg font-semibold hover-glow transition-all duration-300 transform">
                     <i class="fab fa-youtube mr-2"></i>
                     Subscribe on YouTube
                 </a>
-                <a href="#content" 
-                   class="bg-primary hover:bg-purple-700 px-8 py-4 rounded-full text-lg font-semibold hover-glow transition-all duration-300">
+                <!-- Explore Content Button with enhanced hover and click effects -->
+                <a href="#games-i-play" 
+                   class="bg-primary hover:bg-purple-700 active:scale-95 px-8 py-4 rounded-full text-lg font-semibold hover-glow transition-all duration-300 transform">
                     <i class="fas fa-gamepad mr-2"></i>
-                    Explore Content
+                    Explore Games
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- Content Section -->
-    <section id="content" class="py-20 px-4">
+    <!-- Games I Play Section (Replaces Content Section) -->
+    <section id="games-i-play" class="py-20 px-4">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-4xl md:text-6xl font-bold text-center mb-16 gradient-text animate-fade-in">
-                Latest Content
+            <h2 class="text-4xl md:text-6xl font-bold text-center mb-16 gradient-text animate-slide-up">
+                Games I Play
             </h2>
             
-            <!-- YouTube Embed Section -->
-            <div class="glass-effect rounded-2xl p-8 mb-16 hover-glow">
-                <h3 class="text-2xl font-bold mb-6 text-center">Latest Video</h3>
-                <div class="aspect-video max-w-4xl mx-auto">
-                    <iframe 
-                        class="w-full h-full rounded-xl"
-                        src="https://www.youtube.com/embed?listType=user_uploads&list=LamprosGamesofficial"
-                        title="Lampros Games YouTube Channel"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen>
-                    </iframe>
+            <div id="game-breakdown-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
                 </div>
-                <div class="text-center mt-6">
-                    <a href="https://www.youtube.com/@LamprosGamesofficial" target="_blank"
-                       class="inline-flex items-center bg-red-600 hover:bg-red-700 px-6 py-3 rounded-full font-semibold hover-glow transition-all duration-300">
-                        <i class="fab fa-youtube mr-2"></i>
-                        Visit Full Channel
-                    </a>
-                </div>
-            </div>
 
-            <!-- Content Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                <div class="glass-effect rounded-xl p-6 hover-glow transition-all duration-300">
-                    <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mb-4 animate-glow">
-                        <i class="fas fa-video text-2xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">Epic Edits</h3>
-                    <p class="text-gray-300">Amazing edited gameplay highlights and montages</p>
-                </div>
-                
-                <div class="glass-effect rounded-xl p-6 hover-glow transition-all duration-300">
-                    <div class="w-16 h-16 bg-neon-blue rounded-full flex items-center justify-center mb-4 animate-glow">
-                        <i class="fas fa-code text-2xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">Hacking to Games</h3>
-                    <p class="text-gray-300">Advanced gaming strategies and techniques</p>
-                </div>
+            <div class="text-center mt-16">
+                <p class="text-lg text-gray-300 animate-fade-in delay-500">
+                    Discover the breakdown of my gaming adventures across various titles!
+                </p>
             </div>
         </div>
     </section>
@@ -210,8 +267,8 @@
     <!-- About Section -->
     <section id="about" class="py-20 px-4 bg-gradient-to-br from-card-bg to-dark-bg">
         <div class="max-w-4xl mx-auto text-center">
-            <h2 class="text-4xl md:text-6xl font-bold mb-8 gradient-text">About Lampros Games</h2>
-            <div class="glass-effect rounded-2xl p-8">
+            <h2 class="text-4xl md:text-6xl font-bold mb-8 gradient-text animate-slide-up">About Lampros Games</h2>
+            <div class="glass-effect rounded-2xl p-8 animate-scale-in delay-100 animate-on-scroll">
                 <p class="text-lg md:text-xl text-gray-300 mb-6 leading-relaxed">
                     🎮 LamprosGamesofficial 🎮<br>
                     Welcome to LamprosGamesofficial -- your destination for mobile gaming action!
@@ -223,10 +280,10 @@
                     Videos are direct gameplay with no commentary, letting you enjoy the core mechanics, matches, and action as it unfolds. Whether you're here for strategy, chaos, or quick entertainment, you'll find frequent uploads and gameplay highlights. 🔔 Subscribe to stay updated on the latest in mobile gaming!
                 </p>
                 <div class="flex flex-wrap justify-center gap-4">
-                    <span class="bg-primary px-4 py-2 rounded-full text-sm font-semibold">#Gaming</span>
-                    <span class="bg-neon-blue px-4 py-2 rounded-full text-sm font-semibold">#Mobile</span>
-                    <span class="bg-neon-purple px-4 py-2 rounded-full text-sm font-semibold">#Gameplay</span>
-                    <span class="bg-red-600 px-4 py-2 rounded-full text-sm font-semibold">#YouTube</span>
+                    <span class="bg-primary px-4 py-2 rounded-full text-sm font-semibold transform hover:scale-110 transition-transform duration-200">#Gaming</span>
+                    <span class="bg-neon-blue px-4 py-2 rounded-full text-sm font-semibold transform hover:scale-110 transition-transform duration-200">#Mobile</span>
+                    <span class="bg-neon-purple px-4 py-2 rounded-full text-sm font-semibold transform hover:scale-110 transition-transform duration-200">#Gameplay</span>
+                    <span class="bg-red-600 px-4 py-2 rounded-full text-sm font-semibold transform hover:scale-110 transition-transform duration-200">#YouTube</span>
                 </div>
             </div>
         </div>
@@ -235,61 +292,59 @@
     <!-- Social Media Section -->
     <section id="social" class="py-20 px-4">
         <div class="max-w-4xl mx-auto text-center">
-            <h2 class="text-4xl md:text-6xl font-bold mb-16 gradient-text">Connect With Us</h2>
+            <h2 class="text-4xl md:text-6xl font-bold mb-16 gradient-text animate-slide-up">Connect With Us</h2>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
                 <!-- YouTube Card -->
-                <div class="glass-effect rounded-2xl p-8 hover-glow transition-all duration-300">
-                    <div class="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center mx-auto mb-6 animate-glow">
-                        <i class="fab fa-youtube text-3xl"></i>
+                <div class="glass-effect rounded-2xl p-8 hover-glow animate-scale-in delay-100 animate-on-scroll">
+                    <div class="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center mx-auto mb-6 animate-glow transform hover:scale-105 transition-transform duration-200">
+                        <i class="fab fa-youtube text-3xl text-white"></i>
                     </div>
                     <h3 class="text-2xl font-bold mb-4">YouTube</h3>
                     <p class="text-gray-300 mb-6">Subscribe for epic gaming content!</p>
                     <a href="https://www.youtube.com/@LamprosGamesofficial" target="_blank"
-                       class="bg-red-600 hover:bg-red-700 px-6 py-3 rounded-full font-semibold hover-glow transition-all duration-300 inline-block">
+                       class="bg-red-600 hover:bg-red-700 active:scale-95 px-6 py-3 rounded-full font-semibold hover-glow transition-all duration-300 inline-block transform">
                         Subscribe Now
                     </a>
                 </div>
                 
                 <!-- Twitter Card -->
-                <div class="glass-effect rounded-2xl p-8 hover-glow transition-all duration-300">
-                    <div class="w-20 h-20 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-6 animate-glow">
-                        <i class="fab fa-twitter text-3xl"></i>
+                <div class="glass-effect rounded-2xl p-8 hover-glow animate-scale-in delay-200 animate-on-scroll">
+                    <div class="w-20 h-20 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-6 animate-glow transform hover:scale-105 transition-transform duration-200">
+                        <i class="fab fa-twitter text-3xl text-white"></i>
                     </div>
                     <h3 class="text-2xl font-bold mb-4">Twitter</h3>
                     <p class="text-gray-300 mb-6">Follow for gaming updates & news!</p>
-                    <a href="#" onclick="openTwitter()" 
-                       class="bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded-full font-semibold hover-glow transition-all duration-300 inline-block">
+                    <a href="#" onclick="openTwitter(event)" 
+                       class="bg-blue-500 hover:bg-blue-600 active:scale-95 px-6 py-3 rounded-full font-semibold hover-glow transition-all duration-300 inline-block transform">
                         Follow Us
                     </a>
                 </div>
                 
                 <!-- TikTok Card -->
-                <div class="glass-effect rounded-2xl p-8 hover-glow transition-all duration-300">
-                    <div class="w-20 h-20 bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-6 animate-glow">
-                        <i class="fab fa-tiktok text-3xl"></i>
+                <div class="glass-effect rounded-2xl p-8 hover-glow animate-scale-in delay-300 animate-on-scroll">
+                    <div class="w-20 h-20 bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-6 animate-glow transform hover:scale-105 transition-transform duration-200">
+                        <i class="fab fa-tiktok text-3xl text-white"></i>
                     </div>
                     <h3 class="text-2xl font-bold mb-4">TikTok</h3>
                     <p class="text-gray-300 mb-6">Short gaming clips & highlights!</p>
                     <a href="https://www.tiktok.com/@lamprosgames1" target="_blank"
-                       class="bg-gray-800 hover:bg-gray-700 px-6 py-3 rounded-full font-semibold hover-glow transition-all duration-300 inline-block">
+                       class="bg-gray-800 hover:bg-gray-700 active:scale-95 px-6 py-3 rounded-full font-semibold hover-glow transition-all duration-300 inline-block transform">
                         Follow on TikTok
                     </a>
                 </div>
             </div>
             
-            <!-- Additional Social Links -->
-            <div class="glass-effect rounded-2xl p-8">
+            <!-- Additional Social Links (circular icons) -->
+            <div class="glass-effect rounded-2xl p-8 animate-scale-in delay-400 animate-on-scroll">
                 <h3 class="text-2xl font-bold mb-6">Find Us Everywhere</h3>
                 <div class="flex flex-wrap justify-center gap-6">
-                    <a href="https://discord.gg/lampros" target="_blank" class="w-12 h-12 bg-indigo-600 rounded-full flex items-center justify-center hover-glow transition-all duration-300">
-                        <i class="fab fa-discord text-xl"></i>
+                    <a href="http://discord.gg/7Kte7rR3eY" target="_blank" class="w-16 h-16 bg-indigo-600 rounded-full flex items-center justify-center hover-glow transition-all duration-300 transform hover:scale-110 active:scale-95">
+                        <i class="fab fa-discord text-3xl text-white"></i>
                     </a>
-                    <a href="https://www.twitch.tv/lamprosgames" target="_blank" class="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center hover-glow transition-all duration-300">
-                        <i class="fab fa-twitch text-xl"></i>
-                    </a>
-                    <a href="https://www.tiktok.com/@lamprosgames1" target="_blank" class="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center hover-glow transition-all duration-300">
-                        <i class="fab fa-tiktok text-xl"></i>
+                    <!-- Twitch removed -->
+                    <a href="https://www.tiktok.com/@lamprosgames1" target="_blank" class="w-16 h-16 bg-gray-800 rounded-full flex items-center justify-center hover-glow transition-all duration-300 transform hover:scale-110 active:scale-95">
+                        <i class="fab fa-tiktok text-3xl text-white"></i>
                     </a>
                 </div>
             </div>
@@ -297,16 +352,16 @@
     </section>
 
     <!-- Footer -->
-    <footer class="py-12 px-4 bg-card-bg border-t border-primary/30">
+    <footer class="py-12 px-4 bg-card-bg border-t border-primary/40">
         <div class="max-w-4xl mx-auto text-center">
-            <h3 class="text-2xl font-bold gradient-text mb-4">🎮 Lampros Games</h3>
+            <h3 class="text-2xl font-bold gradient-text-shimmer mb-4">🎮 Lampros Games</h3>
             <p class="text-gray-400 mb-6">Bringing you the coolest gaming content on the internet!</p>
             <div class="flex justify-center space-x-6">
-                <a href="https://www.youtube.com/@LamprosGamesofficial" target="_blank" class="text-gray-400 hover:text-primary transition-colors">
-                    <i class="fab fa-youtube text-2xl"></i>
+                <a href="https://www.youtube.com/@LamprosGamesofficial" target="_blank" class="text-gray-400 hover:text-primary transition-all duration-300 transform hover:scale-125">
+                    <i class="fab fa-youtube text-3xl"></i>
                 </a>
-                <a href="#" onclick="openTwitter()" class="text-gray-400 hover:text-primary transition-colors">
-                    <i class="fab fa-twitter text-2xl"></i>
+                <a href="#" onclick="openTwitter(event)" class="text-gray-400 hover:text-primary transition-all duration-300 transform hover:scale-125">
+                    <i class="fab fa-twitter text-3xl"></i>
                 </a>
             </div>
             <p class="text-gray-500 text-sm mt-6">© 2025 Lampros Games. Game on! 🚀</p>
@@ -314,7 +369,47 @@
     </footer>
 
     <script>
-        // Dark mode support
+        // --- Game Data (Hardcoded from 'About' section for simplicity) ---
+        const gameData = [
+            { name: "War Robots", percentage: 10, colorClass: "wr-color" },
+            { name: "Tank Stars", percentage: 5, colorClass: "ts-color" },
+            { name: "Hills of Steel", percentage: 60, colorClass: "hos-color" },
+            { name: "Among Us", percentage: 25, colorClass: "au-color" }
+        ];
+
+        // --- Helper function to create a circular progress bar SVG ---
+        function createCircularProgressBar(game, delay) {
+            const radius = 45; // Radius of the circle stroke
+            const circumference = 2 * Math.PI * radius;
+            const strokeDashoffset = circumference - (game.percentage / 100) * circumference;
+
+            return `
+                <div class="glass-effect rounded-2xl p-6 flex flex-col items-center justify-center text-center hover-glow animate-scale-in animate-on-scroll" style="animation-delay: ${delay}ms;">
+                    <div class="relative w-32 h-32 flex items-center justify-center mb-4">
+                        <svg class="progress-circle w-full h-full" viewBox="0 0 100 100">
+                            <circle class="progress-circle-bg" cx="50" cy="50" r="${radius}"></circle>
+                            <circle class="progress-circle-fill stroke-${game.colorClass}"
+                                    cx="50" cy="50" r="${radius}"
+                                    stroke-dasharray="${circumference} ${circumference}"
+                                    stroke-dashoffset="${circumference}"
+                                    data-final-offset="${strokeDashoffset}"></circle>
+                        </svg>
+                        <span class="percentage-text absolute text-2xl font-bold text-white" data-percentage="${game.percentage}">0%</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">${game.name}</h3>
+                </div>
+            `;
+        }
+
+        // --- Populate the Games I Play section ---
+        const gameBreakdownGrid = document.getElementById('game-breakdown-grid');
+        gameData.forEach((game, index) => {
+            // Stagger animation delay
+            const delay = 100 + (index * 100); 
+            gameBreakdownGrid.innerHTML += createCircularProgressBar(game, delay);
+        });
+
+        // --- Dark mode support (existing functionality) ---
         if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
             document.documentElement.classList.add('dark');
         }
@@ -326,7 +421,7 @@
             }
         });
 
-        // Mobile menu toggle
+        // --- Mobile menu toggle (existing functionality) ---
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         
@@ -334,7 +429,7 @@
             mobileMenu.classList.toggle('hidden');
         });
 
-        // Smooth scrolling for navigation links
+        // --- Smooth scrolling for navigation links (existing functionality) ---
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -350,41 +445,74 @@
             });
         });
 
-        // Twitter function (you can customize this with your actual Twitter handle)
-        function openTwitter() {
+        // --- Twitter function (updated to prevent default for # href) ---
+        function openTwitter(event) {
+            event.preventDefault(); // Prevent default link behavior
             window.open('https://x.com/LamprosGames', '_blank');
         }
 
-        // Add scroll animations
+        // --- IntersectionObserver for general scroll animations ---
         const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
+            threshold: 0.1, 
+            rootMargin: '0px 0px -50px 0px' 
         };
 
-        const observer = new IntersectionObserver((entries) => {
+        const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
+                    if (entry.target.classList.contains('animate-scale-in')) {
+                        entry.target.classList.remove('opacity-0', 'translate-y-8'); 
+                        entry.target.style.animationName = 'scale-in'; 
+                    } else {
+                        entry.target.classList.remove('opacity-0', 'translate-y-8');
+                        entry.target.style.animationName = 'slide-up';
+                    }
+                    entry.target.classList.add('animation-started'); 
+
+                    // If it's a progress bar, animate the circle and count up the percentage
+                    const progressBarFill = entry.target.querySelector('.progress-circle-fill');
+                    const percentageText = entry.target.querySelector('.percentage-text');
+                    if (progressBarFill && percentageText) {
+                        progressBarFill.style.strokeDashoffset = progressBarFill.dataset.finalOffset;
+                        percentageText.style.opacity = '1'; // Make text visible
+
+                        const finalPercentage = parseInt(percentageText.dataset.percentage);
+                        let currentPercentage = 0;
+                        const duration = 1500; // 1.5 seconds for count up
+                        const startTime = performance.now();
+
+                        function animateCount(currentTime) {
+                            const elapsedTime = currentTime - startTime;
+                            const progress = Math.min(elapsedTime / duration, 1);
+                            currentPercentage = Math.floor(progress * finalPercentage);
+                            percentageText.textContent = `${currentPercentage}%`;
+
+                            if (progress < 1) {
+                                requestAnimationFrame(animateCount);
+                            }
+                        }
+                        requestAnimationFrame(animateCount);
+                    }
+
+                    observer.unobserve(entry.target); 
                 }
             });
         }, observerOptions);
 
         // Observe elements for scroll animations
-        document.querySelectorAll('.glass-effect').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        document.querySelectorAll('.animate-on-scroll').forEach((el, index) => {
+            el.classList.add('opacity-0', 'translate-y-8'); 
             observer.observe(el);
         });
 
-        // Add floating animation to hero elements
-        setInterval(() => {
-            const floatingElements = document.querySelectorAll('.animate-float');
-            floatingElements.forEach((el, index) => {
-                el.style.animationDelay = `${index * 0.5}s`;
+        // Add a subtle pulse effect on button clicks for better feedback
+        document.querySelectorAll('a, button').forEach(el => {
+            el.addEventListener('click', () => {
+                el.classList.remove('animate-pulse-once');
+                void el.offsetWidth; 
+                el.classList.add('animate-pulse-once');
             });
-        }, 3000);
+        });
     </script>
 </body>
 </html>
